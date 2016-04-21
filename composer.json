@@ -1,0 +1,17 @@
+{
+    "name": "martin-sotirov/corepress",
+    "description": "A Theme and A Theme and Plugin Development Library for WordPress",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Martin Sotirov",
+            "email": "martin@evil.ninja"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "MartinSotirov\\CorePress\\": "src"
+        }
+    },
+    "require": {}
+}
