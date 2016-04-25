@@ -9,6 +9,15 @@ class Theme
 
     public function __construct()
     {
+        require_once(dirname(__FILE__) . '/../vendor/autoload.php');
+
+        /**
+         * If debug mode is enabled, boot the whoops error page handler
+         */
+        if (WP_DEBUG === true && WHOOPS === true) {
+            $this->bootWhoops();
+        }
+
         $this->dir = get_stylesheet_directory();
         $this->uri = get_stylesheet_directory_uri();
         $this->filesystem = $this->initFilesystem();
@@ -22,14 +31,29 @@ class Theme
         add_action('wp_enqueue_scripts', [$this, 'loadAssets']);
     }
 
+    /**
+     * Boot the whoops error page handler
+     */
+    public function bootWhoops()
+    {
+        $whoops = new \Whoops\Run;
+        $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+        $whoops->register();
+    }
+
+    /**
+     * Init the filesystem reader Flysystem
+     */
     public function initFilesystem()
     {
-        require_once(dirname(__FILE__) . '/../vendor/autoload.php');
 
         $adapter = new \League\Flysystem\Adapter\Local($this->dir);
         return new \League\Flysystem\Filesystem($adapter);
     }
 
+    /**
+     * Register the shortcodes
+     */
     public function loadShortcodes()
     {
         if ($this->filesystem->has('inc/Shortcodes')) {
@@ -61,14 +85,6 @@ class Theme
 
     public function loadAssets()
     {
-        //if ($this->filesystem->has('assets/css')) {
-            //foreach ($this->filesystem->listContents('assets/css') as $file) {
-                //if ($file['extension'] === 'css') {
-                    //wp_enqueue_style(rtrim($file['basename'], '.css'), $this->uri . '/' . $file['path']);
-                //}
-            //}
-        //}
-
         if ($this->filesystem->has('assets')) {
 
             foreach ($this->filesystem->listContents('assets', true) as $file) {
@@ -81,13 +97,5 @@ class Theme
                 }
             }
         }
-
-        //if ($this->filesystem->has('assets/js')) {
-            //foreach ($this->filesystem->listContents('assets/js') as $file) {
-                //if ($file['extension'] === 'css') {
-                    //wp_enqueue_style(rtrim($file['basename'], '.css'), $this->uri . '/' . $file['path']);
-                //}
-            //}
-        //}
     }
 }
