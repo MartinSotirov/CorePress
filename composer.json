@@ -15,6 +15,7 @@
     },
     "require": {
         "league/flysystem": "^1.0",
-        "filp/whoops": "^2.1"
+        "filp/whoops": "^2.1",
+        "league/container": "^2.2"
     }
 }

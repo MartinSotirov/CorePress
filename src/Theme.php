@@ -86,16 +86,19 @@ class Theme
     public function loadAssets()
     {
         if ($this->filesystem->has('assets')) {
+            $assetLoader = new Utils\AssetLoader($this->filesystem->listContents('assets', true));
+            $assetLoader->enqueueScriptsAndStyles();
 
-            foreach ($this->filesystem->listContents('assets', true) as $file) {
-                //echo '<pre>' . print_r($file, 1) . '</pre>';
+            //foreach ($this->filesystem->listContents('assets', true) as $file) {
+                ////echo '<pre>' . print_r($file, 1) . '</pre>';
 
-                if ($file['dirname'] === 'assets/css' && $file['extension'] === 'css') {
-                    wp_enqueue_style(rtrim($file['basename'], '.css'), $this->uri . '/' . $file['path']);
-                } elseif ($file['dirname'] === 'assets/js' && $file['extension'] === 'js') {
-                    wp_enqueue_script(rtrim($file['basename'], '.js'), $this->uri . '/' . $file['path'], [], '', true);
-                }
-            }
+                //if ($file['dirname'] === 'assets/css' && $file['extension'] === 'css') {
+                    //wp_enqueue_style(rtrim($file['basename'], '.css'), $this->uri . '/' . $file['path']);
+                //} elseif ($file['dirname'] === 'assets/js' && $file['extension'] === 'js') {
+                    //wp_enqueue_script(rtrim($file['basename'], '.js'), $this->uri . '/' . $file['path'], [], '', true);
+                //}
+            //}
         }
     }
 }
+
