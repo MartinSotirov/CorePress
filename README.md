@@ -2,7 +2,7 @@
 
 [![Software License][ico-license]](LICENSE.md)
 
-CorePress is a theme and plugin development library for WordPress
+CorePress is a theme development library for WordPress
 
 ## Change log
 
